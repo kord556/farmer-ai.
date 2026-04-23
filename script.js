@@ -1,4 +1,4 @@
-const API_KEY = "AIzaSyDE12-X_4M_G9kLpW2_Z8N0Q1_V6X3Y5"; 
+const API_KEY = "AIzaSyAwNC-ibbDZtwLQpJwlzwNoZokG9WcTqow"; 
 
 async function sendMessage() {
     const input = document.getElementById('user-input');
@@ -21,10 +21,7 @@ async function sendMessage() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 contents: [{ 
-                    parts: [{ text: `You are FARMER AI, an expert agricultural consultant. Respond ONLY in Bahdini Kurdish. 
-                    - Give farming advice.
-                    - Be helpful and professional.
-                    User Question: ${userText}` }] 
+                    parts: [{ text: `Respond as a farming expert in Bahdini Kurdish. Question: ${userText}` }] 
                 }]
             })
         });
@@ -34,7 +31,7 @@ async function sendMessage() {
         if (data.candidates && data.candidates[0].content) {
             botDiv.innerText = data.candidates[0].content.parts[0].text;
         } else {
-            botDiv.innerText = "ببورە، هندەکێ دی تاقی بکە.";
+            botDiv.innerText = "ببورە، تشتەک یێ خەلەتە. کلیلێ بپشکنە.";
         }
     } catch (error) {
         botDiv.innerText = "کێشەکا تەکنیکی هەیه.";
