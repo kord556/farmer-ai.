@@ -1,4 +1,4 @@
-const API_KEY = "AIzaSyCTr6ZBJusKAxne3ucKyNF6eupkTcLr-2k"; 
+const API_KEY = "AIzaSyDE12-X_4M_G9kLpW2_Z8N0Q1_V6X3Y5"; 
 
 async function sendMessage() {
     const input = document.getElementById('user-input');
@@ -7,7 +7,6 @@ async function sendMessage() {
 
     if (userText === "") return;
 
-    // نیشاندانا نامەیا بکاربەر
     chatBox.innerHTML += `<div class="message user">${userText}</div>`;
     input.value = "";
 
@@ -22,21 +21,23 @@ async function sendMessage() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 contents: [{ 
-                    parts: [{ text: `Respond in Bahdini Kurdish. You are a farming expert. Question: ${userText}` }] 
+                    parts: [{ text: `You are FARMER AI, an expert agricultural consultant. Respond ONLY in Bahdini Kurdish. 
+                    - Give farming advice.
+                    - Be helpful and professional.
+                    User Question: ${userText}` }] 
                 }]
             })
         });
 
         const data = await response.json();
         
-        // پشکنینا کا بەرسڤ هاتییە یان نا
         if (data.candidates && data.candidates[0].content) {
             botDiv.innerText = data.candidates[0].content.parts[0].text;
         } else {
-            botDiv.innerText = "ببورە، سیستەم یێ مژوولە. جارەکا دی پرسیارێ بکە.";
+            botDiv.innerText = "ببورە، هندەکێ دی تاقی بکە.";
         }
     } catch (error) {
-        botDiv.innerText = "کێشەکا تەکنیکی هەیه، ئینتەرنێتا خۆ پشکنی بکە.";
+        botDiv.innerText = "کێشەکا تەکنیکی هەیه.";
     }
     chatBox.scrollTop = chatBox.scrollHeight;
 }
