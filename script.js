@@ -12,37 +12,29 @@ async function sendMessage() {
 
     const botDiv = document.createElement("div");
     botDiv.className = "message bot";
-    botDiv.innerText = "ل هێڤیێ بە / Please wait...";
+    botDiv.innerText = "ل هێڤیێ بە...";
     chatBox.appendChild(botDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
 
     try {
+        // ئەڤە ئەو بەشە یێ کو بێ VPN کار دکەت
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 contents: [{ 
-                    parts: [{ text: `You are FARMER AI, an expert agricultural consultant. 
-                    - Respond in the SAME language the user uses.
-                    - If they speak Bahdini (Kurdish), respond in authentic Bahdini.
-                    - If they speak Arabic, English, or Sorani, respond in that language.
-                    - Provide expert farming and livestock advice.
-                    User Question: ${userText}` }] 
+                    parts: [{ text: `You are FARMER AI. Respond in Bahdini Kurdish for farming questions. User: ${userText}` }] 
                 }]
             })
         });
 
         const data = await response.json();
-        
-        if (data && data.candidates && data.candidates[0].content) {
-            const aiResponse = data.candidates[0].content.parts[0].text;
-            botDiv.innerText = aiResponse;
+        if (data.candidates) {
+            botDiv.innerText = data.candidates[0].content.parts[0].text;
         } else {
-            botDiv.innerText = "Error: Deployment needed for no-VPN access.";
+            botDiv.innerText = "بوختانەک چێبوو، جارەکا دی تاقی بکە.";
         }
-
     } catch (error) {
-        botDiv.innerText = "Connection error. Please upload to Vercel for free access.";
+        botDiv.innerText = "کێشەکا تەکنیکی هەیه، هندەکێ ل هێڤیێ بە.";
     }
     chatBox.scrollTop = chatBox.scrollHeight;
 }
